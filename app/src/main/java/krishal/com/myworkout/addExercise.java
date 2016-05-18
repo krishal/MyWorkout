@@ -46,7 +46,6 @@ public class addExercise extends AppCompatActivity {
         Button buttonAddTL = (Button) findViewById(R.id.button_addToList);
         assert buttonAddTL != null;
         buttonAddTL.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 addToList();
@@ -153,7 +152,7 @@ public class addExercise extends AppCompatActivity {
         for(int j = 0; j < the.length; j++){
             a = a + sep + the[j];
         }
-        return a;
+        return a.substring(2);
     }
 
     public void printList(List<String[]> t) {

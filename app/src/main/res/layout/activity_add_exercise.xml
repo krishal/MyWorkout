@@ -3,31 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="krishal.com.myworkout.addExercise">
-
-    <ScrollView
+    tools:context="krishal.com.myworkout.addExercise"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp">
-        <LinearLayout
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edittext_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:hint="@string/change_date"
+            android:layout_alignParentTop="true"
+            android:inputType="date" />
 
-            <EditText
-                android:id="@+id/edittext_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/change_date"
-                android:inputType="date" />
+        <ListView
+            android:id="@+id/list_exercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edittext_date"
+            android:layout_above="@+id/linearLayout" />
 
-            <ListView
-                android:id="@+id/list_exercises"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/linearLayout">
 
             <EditText
                 android:id="@+id/edittext_exercise"
@@ -49,7 +55,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/sets"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:nextFocusDown="@+id/edittext_reps"/>
 
                 <EditText
                     android:id="@+id/edittext_reps"
@@ -57,25 +64,23 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/repitions"
-                    android:inputType="number"
-                    android:backgroundTintMode="screen" />
-
+                    android:inputType="number"/>
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/button_addToList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/add_exercise_to_list"
+                android:layout_gravity="center_vertical" />
+
             <Button
                 android:id="@+id/button_saveWorkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/save_and_exit"
                 android:layout_gravity="center_vertical" />
-
-            <Button
-                android:id="@+id/button_addToList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_exercise_to_list"
-                android:layout_gravity="center_vertical" />
         </LinearLayout>
-    </ScrollView>
-
+    </RelativeLayout>
 </LinearLayout>
