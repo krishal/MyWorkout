@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Workout</string>
+    <string name="add_workout">Add Workout</string>
+    <string name="save_and_exit">Save List Items and Exit</string>
+    <string name="sets">Sets</string>
+    <string name="repitions">Repitions</string>
+    <string name="exercise">Exercise</string>
+    <string name="add_exercise_to_list">Add Exercise to List</string>
+    <string name="change_date">Change Date</string>
+</resources>

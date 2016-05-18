@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="krishal.com.myworkout.addExercise">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edittext_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/change_date"
+                android:inputType="date" />
+
+            <ListView
+                android:id="@+id/list_exercises"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/edittext_exercise"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:hint="@string/exercise"
+                android:inputType="textCapWords|textCapSentences|textCapCharacters" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edittext_sets"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sets"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/edittext_reps"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/repitions"
+                    android:inputType="number"
+                    android:backgroundTintMode="screen" />
+
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/button_saveWorkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_and_exit"
+                android:layout_gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/button_addToList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_exercise_to_list"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
