@@ -13,19 +13,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edittext_date"
+        <Button
+            android:id="@+id/button_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/change_date"
-            android:layout_alignParentTop="true"
-            android:inputType="date" />
+            android:layout_alignParentTop="true"/>
 
         <ListView
             android:id="@+id/list_exercises"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edittext_date"
+            android:layout_below="@+id/button_date"
             android:layout_above="@+id/linearLayout" />
 
         <LinearLayout

@@ -1,10 +1,12 @@
 package krishal.com.myworkout;
 
+import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -17,6 +19,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.lang.String;
 
@@ -28,12 +31,19 @@ public class addExercise extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_exercise);
-
+        datePickDia();
         addListenerOnButton();
     }
 
     public void addListenerOnButton() {
-
+        Button buttonD = (Button) findViewById(R.id.button_date);
+        assert buttonD != null;
+        buttonD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickDia();
+            }
+        });
         Button button = (Button) findViewById(R.id.button_saveWorkout);
         assert button != null;
         button.setOnClickListener(new View.OnClickListener() {
@@ -90,18 +100,39 @@ public class addExercise extends AppCompatActivity {
         }
     }
 
-    public void addToFile() {
+    private void datePickDia() {
+        Calendar myCal = Calendar.getInstance();
+        new DatePickerDialog(this, datePickerListener, myCal.YEAR, myCal.MONTH, myCal.DATE);
+    }
 
+    int year, month, day;
+    private DatePickerDialog.OnDateSetListener datePickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+            String tem = day+"-"+month+"-"+year;
+            Button buttonD = (Button) findViewById(R.id.button_date);
+            buttonD.setText(tem);
+        }
+    };
+
+    private void addToFile() {
+        List<String[]> work = new ArrayList<>();
         String csvFile = "src/main/java/log.csv";
         CSVReader br = null;
         String[] nextLine;
-        String[] newLine = {"1", "2"};
+        String[] newLine;
         char csvSplitBy = ',';
 
         try {
             br = new CSVReader(new FileReader(csvFile), csvSplitBy);
             while ((nextLine = br.readNext()) != null) {
-                workouts.add(nextLine);
+                work.add(nextLine);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -117,11 +148,13 @@ public class addExercise extends AppCompatActivity {
             }
         }
         CSVWriter wr = null;
-        printList(workouts);
+        printList(work);
+        newLine = listIntoOneLine((ArrayList)workouts);
+        newLine[0] = "\""+year+month+day+"\"";
         try {
             wr = new CSVWriter(new FileWriter(csvFile), csvSplitBy);
-            workouts.add(newLine);
-            wr.writeAll(workouts);
+            work.add(newLine);
+            wr.writeAll(work);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println(new File(".").getAbsoluteFile());
@@ -137,6 +170,18 @@ public class addExercise extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public String[] listIntoOneLine(ArrayList<String[]> h){
+        String[] ret = new String[h.size()*3+1];
+        String[] temp;
+        for(int i = 0; i < h.size(); i++){
+            temp = h.get(i);
+            for(int j = 0; j < temp.length; j++){
+                ret[i*3+j+1] = temp[j];
+            }
+        }
+        return ret;
     }
 
     public ArrayList combineArray(ArrayList<String[]> t) {
