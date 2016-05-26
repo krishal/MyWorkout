@@ -7,4 +7,5 @@
     <string name="exercise">Exercise</string>
     <string name="add_exercise_to_list">Add Exercise to List</string>
     <string name="change_date">Change Date</string>
+    <string name="display_data">Display Data</string>
 </resources>

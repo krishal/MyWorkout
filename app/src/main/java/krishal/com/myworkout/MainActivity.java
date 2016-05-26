@@ -20,13 +20,24 @@ public class MainActivity extends AppCompatActivity {
     public void addListenerOnButton(){
         final Context context = this;
 
-        Button button = (Button) findViewById(R.id.button_addWorkout);
-        assert button != null;
-        button.setOnClickListener(new OnClickListener(){
+        Button butAddEx = (Button) findViewById(R.id.button_addWorkout);
+        assert butAddEx != null;
+        butAddEx.setOnClickListener(new OnClickListener(){
 
             @Override
             public void onClick(View v) {
                 Intent  intent = new Intent(context, addExercise.class);
+                startActivity(intent);
+            }
+        });
+
+        Button butView = (Button) findViewById(R.id.button_displayData);
+        assert butView != null;
+        butView.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent  intent = new Intent(context, DisplayData.class);
                 startActivity(intent);
             }
         });
