@@ -1,5 +1,7 @@
 package krishal.com.myworkout;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,13 +38,16 @@ public class addExercise extends AppCompatActivity {
     }
 
     public void addListenerOnButton() {
-        Button button = (Button) findViewById(R.id.button_saveWorkout);
-        assert button != null;
-        button.setOnClickListener(new View.OnClickListener() {
+        final Context context = this;
+        Button buttonSave = (Button) findViewById(R.id.button_saveWorkout);
+        assert buttonSave != null;
+        buttonSave.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 addToFile();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
             }
         });
         Button buttonAddTL = (Button) findViewById(R.id.button_addToList);
