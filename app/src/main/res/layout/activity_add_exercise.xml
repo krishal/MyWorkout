@@ -13,19 +13,48 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/change_date"
-            android:layout_alignParentTop="true"/>
+            android:weightSum="3"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:id="@+id/linearLayout2">
+
+            <EditText
+                android:id="@+id/editText_year"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/year"
+                android:inputType="number"
+                android:nextFocusDown="@+id/editText2"
+                android:autoText="false"
+                android:numeric="integer" />
+
+            <EditText
+                android:id="@+id/editText_month"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/month"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText_day"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/day"
+                android:inputType="number" />
+        </LinearLayout>
 
         <ListView
             android:id="@+id/list_exercises"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button_date"
-            android:layout_above="@+id/linearLayout" />
+            android:layout_above="@+id/linearLayout"
+            android:layout_below="@+id/linearLayout2" />
 
         <LinearLayout
             android:orientation="vertical"

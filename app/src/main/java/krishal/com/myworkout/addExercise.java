@@ -1,12 +1,10 @@
 package krishal.com.myworkout;
 
-import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -14,10 +12,12 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,14 +36,6 @@ public class addExercise extends AppCompatActivity {
     }
 
     public void addListenerOnButton() {
-        Button buttonD = (Button) findViewById(R.id.button_date);
-        assert buttonD != null;
-        buttonD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePickDia();
-            }
-        });
         Button button = (Button) findViewById(R.id.button_saveWorkout);
         assert button != null;
         button.setOnClickListener(new View.OnClickListener() {
@@ -102,35 +94,26 @@ public class addExercise extends AppCompatActivity {
 
     private void datePickDia() {
         Calendar myCal = Calendar.getInstance();
-        new DatePickerDialog(this, datePickerListener, myCal.YEAR, myCal.MONTH, myCal.DATE);
+        EditText day = (EditText) findViewById(R.id.editText_day);
+        EditText month = (EditText) findViewById(R.id.editText_month);
+        EditText year = (EditText) findViewById(R.id.editText_year);
+
+        year.setText(myCal.get(myCal.YEAR)+"");
+        month.setText(myCal.get(myCal.MONTH)+"");
+        day.setText(myCal.get(myCal.DATE)+"");
     }
-
-    int year, month, day;
-    private DatePickerDialog.OnDateSetListener datePickerListener
-            = new DatePickerDialog.OnDateSetListener() {
-
-        // when dialog box is closed, below method will be called.
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-            year = selectedYear;
-            month = selectedMonth;
-            day = selectedDay;
-            String tem = day+"-"+month+"-"+year;
-            Button buttonD = (Button) findViewById(R.id.button_date);
-            buttonD.setText(tem);
-        }
-    };
 
     private void addToFile() {
         List<String[]> work = new ArrayList<>();
-        String csvFile = "src/main/java/log.csv";
+        String csvFile = "check.csv";
         CSVReader br = null;
-        String[] nextLine;
         String[] newLine;
-        char csvSplitBy = ',';
 
         try {
-            br = new CSVReader(new FileReader(csvFile), csvSplitBy);
+            FileInputStream csvStream = openFileInput(csvFile);
+            InputStreamReader csvStreamReader = new InputStreamReader(csvStream);
+            br = new CSVReader(csvStreamReader);
+            String[] nextLine;
             while ((nextLine = br.readNext()) != null) {
                 work.add(nextLine);
             }
@@ -149,21 +132,26 @@ public class addExercise extends AppCompatActivity {
         }
         CSVWriter wr = null;
         printList(work);
+
+        EditText day = (EditText) findViewById(R.id.editText_day);
+        EditText month = (EditText) findViewById(R.id.editText_month);
+        EditText year = (EditText) findViewById(R.id.editText_year);
         newLine = listIntoOneLine((ArrayList)workouts);
-        newLine[0] = "\""+year+month+day+"\"";
+        newLine[0] = ""+year.getText()+month.getText()+day.getText();
+
         try {
-            wr = new CSVWriter(new FileWriter(csvFile), csvSplitBy);
+            FileOutputStream fileOutputStream = openFileOutput(csvFile, MODE_PRIVATE);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+            wr = new CSVWriter(outputStreamWriter);
             work.add(newLine);
             wr.writeAll(work);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println(new File(".").getAbsoluteFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-
         } finally {
             if (wr != null) {
                 try {
+                    wr.flush();
                     wr.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -187,7 +175,7 @@ public class addExercise extends AppCompatActivity {
     public ArrayList combineArray(ArrayList<String[]> t) {
         List<String> temp = new ArrayList<>(t.size());
         for (int i = 0; i < t.size(); i++) {
-            temp.add(i, join(", ", t.get(i)));
+            temp.add(i, join(",", t.get(i)));
         }
         return (ArrayList) temp;
     }

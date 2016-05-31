@@ -1,16 +1,16 @@
 package krishal.com.myworkout;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,18 +25,24 @@ public class DisplayData extends AppCompatActivity {
 
     private void printFile() {
         List<String[]> work = new ArrayList<>();
-        String csvFile = "src/main/java/log.csv";
+        String csvFile = "check.csv";
         CSVReader br = null;
         String[] nextLine;
-        String[] newLine;
-        char csvSplitBy = ',';
 
         try {
-            br = new CSVReader(new FileReader(csvFile), csvSplitBy);
+            FileInputStream csvStream = openFileInput(csvFile);
+            InputStreamReader csvStreamReader = new InputStreamReader(csvStream);
+            br = new CSVReader(csvStreamReader);
             while ((nextLine = br.readNext()) != null) {
                 work.add(nextLine);
             }
-            printList((ArrayList)work);
+            List<String> w = combineArray((ArrayList)work);
+            ListView lists = (ListView) findViewById(R.id.textView);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, w);
+            assert lists != null;
+            lists.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -52,16 +58,19 @@ public class DisplayData extends AppCompatActivity {
         }
     }
 
-    public String printList(ArrayList<String[]> h){
-        String ret = "";
-        String[] temp;
-        for(int i = 0; i < h.size(); i++){
-            temp = h.get(i);
-            for(int j = 0; j < temp.length; j++){
-                ret = ret + ", " + temp[j];
-            }
-            ret = ret + "/n";
+    public ArrayList combineArray(ArrayList<String[]> t) {
+        List<String> temp = new ArrayList<>(t.size());
+        for (int i = 0; i < t.size(); i++) {
+            temp.add(i, join(",", t.get(i)));
         }
-        return ret;
+        return (ArrayList) temp;
+    }
+
+    public String join(String sep, String[] the){
+        String a = "";
+        for(int j = 0; j < the.length; j++){
+            a = a + sep + the[j];
+        }
+        return a.substring(2);
     }
 }
