@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent  intent = new Intent(context, addExercise.class);
+                finish();
                 startActivity(intent);
             }
         });

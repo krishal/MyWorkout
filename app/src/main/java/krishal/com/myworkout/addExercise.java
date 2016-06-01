@@ -28,7 +28,7 @@ import java.lang.String;
 public class addExercise extends AppCompatActivity {
 
     List<String[]> workouts = new ArrayList<>();
-
+    Integer numberOfEntries = 4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +47,7 @@ public class addExercise extends AppCompatActivity {
             public void onClick(View v) {
                 addToFile();
                 Intent intent = new Intent(context, MainActivity.class);
+                finish();
                 startActivity(intent);
             }
         });
@@ -64,12 +65,14 @@ public class addExercise extends AppCompatActivity {
         EditText exer = (EditText) findViewById(R.id.edittext_exercise);
         EditText set = (EditText) findViewById(R.id.edittext_sets);
         EditText rep = (EditText) findViewById(R.id.edittext_reps);
+        EditText wei = (EditText) findViewById(R.id.edittext_weight);
 
         String e = exer.getText().toString().trim();
         String s = set.getText().toString().trim();
         String r = rep.getText().toString().trim();
+        String w = wei.getText().toString().trim();
 
-        if (e.equals("") || s.equals("") || r.equals("")) {
+        if (e.equals("") || s.equals("") || r.equals("")||w.equals("")) {
             if (e.equals("")) {
                 exer.setError("Field cannot be left blank");
             }
@@ -79,8 +82,11 @@ public class addExercise extends AppCompatActivity {
             if (r.equals("")) {
                 rep.setError("Field cannot be left blank");
             }
+            if (w.equals("")) {
+                wei.setError("Field cannot be left blank");
+            }
         } else {
-            String[] what = {e, s, r};
+            String[] what = {e, s, r, w};
             workouts.add(what);
 
             List<String> work = combineArray((ArrayList) workouts);
@@ -94,6 +100,7 @@ public class addExercise extends AppCompatActivity {
             exer.setError(null);
             set.setError(null);
             rep.setError(null);
+            wei.setError(null);
         }
     }
 
@@ -142,7 +149,13 @@ public class addExercise extends AppCompatActivity {
         EditText month = (EditText) findViewById(R.id.editText_month);
         EditText year = (EditText) findViewById(R.id.editText_year);
         newLine = listIntoOneLine((ArrayList)workouts);
-        newLine[0] = ""+year.getText()+month.getText()+day.getText();
+
+        String mon = ""+month.getText();
+        String da = ""+day.getText();
+        if(mon.length()==1) mon = "0"+mon;
+        if(da.length()==1) da = "0"+da;
+
+        newLine[0] = ""+year.getText()+mon+da;
 
         try {
             FileOutputStream fileOutputStream = openFileOutput(csvFile, MODE_PRIVATE);
@@ -166,12 +179,12 @@ public class addExercise extends AppCompatActivity {
     }
 
     public String[] listIntoOneLine(ArrayList<String[]> h){
-        String[] ret = new String[h.size()*3+1];
+        String[] ret = new String[h.size()*numberOfEntries+1];
         String[] temp;
         for(int i = 0; i < h.size(); i++){
             temp = h.get(i);
             for(int j = 0; j < temp.length; j++){
-                ret[i*3+j+1] = temp[j];
+                ret[i*numberOfEntries+j+1] = temp[j];
             }
         }
         return ret;
@@ -190,7 +203,7 @@ public class addExercise extends AppCompatActivity {
         for(int j = 0; j < the.length; j++){
             a = a + sep + the[j];
         }
-        return a.substring(2);
+        return a.substring(1);
     }
 
     public void printList(List<String[]> t) {
