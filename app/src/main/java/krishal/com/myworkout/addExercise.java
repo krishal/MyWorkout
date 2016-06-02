@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,6 +34,10 @@ public class addExercise extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_exercise);
+
+        EditText exer = (EditText) findViewById(R.id.edittext_exercise);
+        exer.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+
         datePickDia();
         addListenerOnButton();
     }

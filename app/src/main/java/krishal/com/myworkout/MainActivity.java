@@ -42,5 +42,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button butViewExer = (Button) findViewById(R.id.button_display_by_exercise);
+        assert butViewExer != null;
+        butViewExer.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent  intent = new Intent(context, DisplayByExercise.class);
+                startActivity(intent);
+            }
+        });
     }
 }

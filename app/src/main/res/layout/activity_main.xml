@@ -16,10 +16,18 @@
         android:layout_height="wrap_content"
         android:text="@string/add_workout"
         android:clickable="true" />
+
     <Button
         android:id="@+id/button_displayData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/display_data"
+        android:clickable="true" />
+
+    <Button
+        android:id="@+id/button_display_by_exercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/display_by_exercise"
         android:clickable="true" />
 </LinearLayout>
