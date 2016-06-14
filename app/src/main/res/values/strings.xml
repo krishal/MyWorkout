@@ -14,4 +14,5 @@
     <string name="clear_all_data">Clear All Data</string>
     <string name="weight">Weight</string>
     <string name="display_by_exercise">Display By Exercise</string>
+    <string name="intentExer">Exercise</string>
 </resources>

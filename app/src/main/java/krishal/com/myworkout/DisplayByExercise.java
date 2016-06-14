@@ -40,7 +40,8 @@ public class DisplayByExercise extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id){
                 final String item = (String) parent.getItemAtPosition(position);
                 Intent  intent = new Intent(context, DisplayData.class);
-
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra(getString(R.string.intentExer), item);
                 startActivity(intent);
             }
             }

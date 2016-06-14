@@ -25,7 +25,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".DisplayData" />
-        <activity android:name=".DisplayByExercise"></activity>
+        <activity android:name=".DisplayByExercise" />
+        <activity android:name=".ViewExerciseData"></activity>
     </application>
 
 </manifest>
