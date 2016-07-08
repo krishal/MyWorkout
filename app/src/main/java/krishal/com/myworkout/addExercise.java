@@ -29,7 +29,7 @@ import java.lang.String;
 public class addExercise extends AppCompatActivity {
 
     List<String[]> workouts = new ArrayList<>();
-    Integer numberOfEntries = 4;
+    int numberOfEntries = 4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,12 +155,14 @@ public class addExercise extends AppCompatActivity {
         EditText year = (EditText) findViewById(R.id.editText_year);
         newLine = listIntoOneLine((ArrayList)workouts);
 
-        String mon = ""+month.getText();
-        String da = ""+day.getText();
-        if(mon.length()==1) mon = "0"+mon;
-        if(da.length()==1) da = "0"+da;
+        int ye = Integer.parseInt(year.getText()+"");
+        int mon = Integer.parseInt(month.getText()+"");
+        int da = Integer.parseInt(day.getText()+"");
 
-        newLine[0] = ""+year.getText()+mon+da;
+        Calendar myCal = Calendar.getInstance();
+        myCal.set(ye,mon,da);
+
+        newLine[0] = ""+myCal.getTimeInMillis();
 
         try {
             FileOutputStream fileOutputStream = openFileOutput(csvFile, MODE_PRIVATE);

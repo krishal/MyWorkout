@@ -30,4 +30,12 @@
         android:layout_height="wrap_content"
         android:text="@string/display_by_exercise"
         android:clickable="true" />
+
+    <Button
+        android:id="@+id/button_generate_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/generate_data"
+        android:clickable="true" />
+    />
 </LinearLayout>

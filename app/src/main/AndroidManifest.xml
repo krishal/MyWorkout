@@ -26,7 +26,8 @@
 
         <activity android:name=".DisplayData" />
         <activity android:name=".DisplayByExercise" />
-        <activity android:name=".ViewExerciseData"></activity>
+        <activity android:name=".ViewExerciseData" />
+        <activity android:name=".GenerateData"></activity>
     </application>
 
 </manifest>

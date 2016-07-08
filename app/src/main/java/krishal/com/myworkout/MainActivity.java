@@ -53,5 +53,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button butGenData = (Button) findViewById(R.id.button_generate_date);
+        assert butGenData != null;
+        butGenData.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent  intent = new Intent(context, GenerateData.class);
+                startActivity(intent);
+            }
+        });
     }
 }
