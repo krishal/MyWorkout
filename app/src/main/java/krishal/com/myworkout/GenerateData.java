@@ -21,6 +21,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 public class GenerateData extends AppCompatActivity {
 
@@ -72,8 +73,9 @@ public class GenerateData extends AppCompatActivity {
         }
         CSVWriter wr = null;
         Calendar myCal = Calendar.getInstance();
-        int holder;
-        long holderL;
+        myCal.add(Calendar.DATE,-101);
+        Random rand;
+        long holder;
         for(int i = 0; i< 100;i++) {
 //            holder = (i*3+20);
 //            newLine[4] = holder+"";
@@ -83,7 +85,10 @@ public class GenerateData extends AppCompatActivity {
 //            newLine[12] = holder+"";
 //            holderL = myCal.getTimeInMillis()+86400000*(i-100);
 //            newLine[0] = holderL+"";
-            String[] newLine =  {myCal.getTimeInMillis()+86400000*(i-100)+"",exercises[0],3+"",12+"",(i+20)+"",exercises[1],3+"",12+"",(i+40)+"",exercises[2],3+"",12+"",(i+100)+""};
+            rand = new Random();
+            holder = rand.nextInt(3)-1;
+            myCal.add(Calendar.DATE,1);
+            String[] newLine =  {myCal.getTimeInMillis()+"",exercises[0],3+"",12+"",(i*holder+20)+"",exercises[1],3+"",12+"",(i+40)+"",exercises[2],3+"",12+"",(i+100)+""};
 
             work.add(newLine);
         }

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DisplayData extends AppCompatActivity {
@@ -121,10 +122,13 @@ public class DisplayData extends AppCompatActivity {
     }
 
     public String join(String sep, String[] the){
-        String a = "";
-        for (int i = 0; i<the.length;i++) {
+        long converter = Long.parseLong(the[0]);
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(converter);
+        String a = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.DATE)+"";
+        for (int i = 1; i<=the.length-1;i++) {
             a = a + sep + the[i];
         }
-        return a.substring(2);
+        return a;
     }
 }

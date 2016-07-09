@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.opencsv.CSVReader;
@@ -59,6 +61,22 @@ public class ViewExerciseData extends AppCompatActivity {
             LineGraphSeries<DataPoint> w = extractUniqueExer((LinkedList)work, exercise);
             graph.addSeries(w);
 
+            // set date label formatter
+            graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(ViewExerciseData.this));
+            graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
+
+            Calendar cal = Calendar.getInstance();
+            Date d1 = cal.getTime();
+            cal.add(Calendar.MONTH, -1);
+            Date d2 = cal.getTime();
+            // set manual x bounds to have nice steps
+            graph.getViewport().setMinX(d2.getTime());
+            graph.getViewport().setMaxX(d1.getTime());
+            graph.getViewport().setXAxisBoundsManual(true);
+
+            // as we use dates as labels, the human rounding to nice readable numbers
+            // is not nessecary
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -73,6 +91,8 @@ public class ViewExerciseData extends AppCompatActivity {
             }
         }
     }
+
+
 
     public LineGraphSeries<DataPoint> extractUniqueExer(LinkedList<String[]> holder, String exer){
         ArrayList<DataPoint> lineGraph = new ArrayList<>();
