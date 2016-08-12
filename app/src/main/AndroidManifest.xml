@@ -28,7 +28,8 @@
         <activity android:name=".DisplayByExercise" />
         <activity android:name=".ViewExerciseData" />
         <activity android:name=".GenerateData" />
-        <activity android:name=".GraphMax"></activity>
+        <activity android:name=".GraphMax" />
+        <activity android:name=".EditData"></activity>
     </application>
 
 </manifest>

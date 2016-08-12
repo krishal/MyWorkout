@@ -136,11 +136,14 @@ public class GraphMax extends AppCompatActivity {
         for(int i = 0; i < holder.size(); i++){
             temp = holder.get(i);
             for(int j = 1; j < temp.length; j= j+numberOfInputs){
-                if(retrn.containsKey(temp[j]) && (Integer)retrn.get(temp[j])<Integer.parseInt(temp[j+3])){
-                    retrn.put(temp[j], Integer.parseInt(temp[j+3]));
+                String check = (temp[j].toUpperCase().trim());
+                System.out.println(check + " " + temp[j+3]);
+                if(retrn.containsKey(check) && (Integer)retrn.get(check)<Integer.parseInt(temp[j+3])){
+                    System.out.println(check+": "+retrn.get(check)+" < "+temp[j+3]);
+                    retrn.put(check, Integer.parseInt(temp[j+3]));
                 }
-                else {
-                    retrn.put(temp[j], Integer.parseInt(temp[j+3]));
+                else if(!retrn.containsKey(check)){
+                    retrn.put(check, Integer.parseInt(temp[j+3]));
                 }
             }
         }

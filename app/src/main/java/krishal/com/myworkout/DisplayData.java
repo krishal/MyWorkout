@@ -1,8 +1,11 @@
 package krishal.com.myworkout;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,10 +27,23 @@ public class DisplayData extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final Context context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_data);
         printFile();
         addListenerOnButton();
+        final ListView listView = (ListView) findViewById(R.id.list_all_data);
+        assert listView != null;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id){
+                final String item = (String) parent.getItemAtPosition(position);
+                Intent intent = new Intent(context, EditData.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("Data", position+". "+item);
+                startActivity(intent);
+            }
+        });
     }
 
     public void addListenerOnButton() {
@@ -54,7 +70,7 @@ public class DisplayData extends AppCompatActivity {
             wr.writeAll(work);
 
             List<String> w = new ArrayList<>();
-            ListView lists = (ListView) findViewById(R.id.textView);
+            ListView lists = (ListView) findViewById(R.id.list_all_data);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, w);
             assert lists != null;
             lists.setAdapter(adapter);
@@ -90,7 +106,7 @@ public class DisplayData extends AppCompatActivity {
                 work.add(nextLine);
             }
             List<String> w = combineArray((ArrayList)work, ", ");
-            ListView lists = (ListView) findViewById(R.id.textView);
+            ListView lists = (ListView) findViewById(R.id.list_all_data);
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, w);
 
