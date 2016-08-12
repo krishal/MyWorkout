@@ -64,5 +64,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button butGraMax = (Button) findViewById(R.id.button_graph_max);
+        assert butGraMax != null;
+        butGraMax.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent  intent = new Intent(context, GraphMax.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -164,11 +164,21 @@ public class addExercise extends AppCompatActivity {
 
         newLine[0] = ""+myCal.getTimeInMillis();
 
+/*        if(work.size()==0){*/
+            work.add(newLine);
+/*        } else if(work.get(0)[0].compareTo(newLine[0])>=0){
+            work.add(0,newLine);
+        } else if(work.get(work.size()-1)[0].compareTo(newLine[0])<=0){
+            work.add(newLine);
+        } else{
+            int insertIndx = insertIndex((ArrayList)work, 0, work.size(), newLine[0]);
+            work.add(insertIndx,newLine);
+        }*/
+
         try {
             FileOutputStream fileOutputStream = openFileOutput(csvFile, MODE_PRIVATE);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
             wr = new CSVWriter(outputStreamWriter);
-            work.add(newLine);
             wr.writeAll(work);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -184,6 +194,13 @@ public class addExercise extends AppCompatActivity {
             }
         }
     }
+
+/*    private int insertIndex(ArrayList work, int start, int end, String s) {
+        int mid = (end-start)/2+start;
+        if(start>end){
+            return 0;
+        }else if(work.get(mid))
+    }*/
 
     public String[] listIntoOneLine(ArrayList<String[]> h){
         String[] ret = new String[h.size()*numberOfEntries+1];

@@ -86,9 +86,9 @@ public class GenerateData extends AppCompatActivity {
 //            holderL = myCal.getTimeInMillis()+86400000*(i-100);
 //            newLine[0] = holderL+"";
             rand = new Random();
-            holder = rand.nextInt(3)-1;
+            holder = rand.nextInt(3);
             myCal.add(Calendar.DATE,1);
-            String[] newLine =  {myCal.getTimeInMillis()+"",exercises[0],3+"",12+"",(i*holder+20)+"",exercises[1],3+"",12+"",(i+40)+"",exercises[2],3+"",12+"",(i+100)+""};
+            String[] newLine =  {myCal.getTimeInMillis()+"",exercises[0],3+"",12+"",(i+holder+20)+"",exercises[1],3+"",12+"",(i+40)+"",exercises[2],3+"",12+"",(i+100)+""};
 
             work.add(newLine);
         }

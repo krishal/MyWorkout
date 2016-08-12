@@ -16,4 +16,5 @@
     <string name="display_by_exercise">Display By Exercise</string>
     <string name="intentExer">Exercise</string>
     <string name="generate_data">Generate Data</string>
+    <string name="graph_max_lifts">Graph Max Lifts</string>
 </resources>

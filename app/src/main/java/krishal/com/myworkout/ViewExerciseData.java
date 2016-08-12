@@ -29,7 +29,7 @@ import static java.util.Arrays.asList;
 
 public class ViewExerciseData extends AppCompatActivity {
 
-    int numberOfInputs = 4;
+    private int numberOfInputs = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
