@@ -11,7 +11,7 @@
     tools:context="krishal.com.myworkout.GraphMax">
 
     <com.androidplot.xy.XYPlot
-        style="@style/APDefacto.Dark"
+        style="@style/APDefacto.Light"
         android:id="@+id/plot"
         android:layout_height="match_parent"
         android:layout_width="match_parent"

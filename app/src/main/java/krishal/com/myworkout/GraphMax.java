@@ -109,10 +109,7 @@ public class GraphMax extends AppCompatActivity {
                 }
             });
 
-            plot.getBackgroundPaint().setAlpha(0);
-            plot.getGraphWidget().getBackgroundPaint().setAlpha(0);
-            plot.getGraphWidget().getGridBackgroundPaint().setAlpha(0);
-
+            plot.getGraphWidget().setDomainLabelOrientation(-45);
             plot.redraw();
 
         } catch (FileNotFoundException e) {
@@ -137,9 +134,9 @@ public class GraphMax extends AppCompatActivity {
             temp = holder.get(i);
             for(int j = 1; j < temp.length; j= j+numberOfInputs){
                 String check = (temp[j].toUpperCase().trim());
-                System.out.println(check + " " + temp[j+3]);
+                //System.out.println(check + " " + temp[j+3]);
                 if(retrn.containsKey(check) && (Integer)retrn.get(check)<Integer.parseInt(temp[j+3])){
-                    System.out.println(check+": "+retrn.get(check)+" < "+temp[j+3]);
+                    //System.out.println(check+": "+retrn.get(check)+" < "+temp[j+3]);
                     retrn.put(check, Integer.parseInt(temp[j+3]));
                 }
                 else if(!retrn.containsKey(check)){
