@@ -1,6 +1,8 @@
 package krishal.com.myworkout;
 
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -83,12 +85,25 @@ public class GraphMax extends AppCompatActivity {
                 maxNums.add(uniEnt.getValue());
                 iterator.remove();
             }
-            BarFormatter barFormatter = new BarFormatter(Color.MAGENTA,Color.LTGRAY);
+            BarFormatter barFormatter = new BarFormatter();
+
             plot.addSeries(new SimpleXYSeries(maxNums, SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Exercise"),barFormatter);
+
+
+            BarRenderer renderer = (BarRenderer) plot.getRenderer( BarRenderer.class );
+            renderer.setBarRenderStyle(BarRenderer.BarRenderStyle.SIDE_BY_SIDE);
+            renderer.setBarWidthStyle(BarRenderer.BarWidthStyle.FIXED_WIDTH);
+
+            renderer.setBarWidth(60);
+
+            Paint series1Fill = new Paint();
+            series1Fill.setColor(Color.MAGENTA);
+            barFormatter.setFillPaint(series1Fill);
+            plot.getLegendWidget().setVisible(false);
 
             // Reduce the number of range labels
             plot.setTicksPerRangeLabel(5);
-            plot.setDomainBoundaries(-1, maxExer.size()-1, BoundaryMode.FIXED);
+            plot.setDomainBoundaries(-1, maxExer.size(), BoundaryMode.FIXED);
             plot.setRangeLowerBoundary(0,BoundaryMode.FIXED);
             plot.setRangeStep(XYStepMode.INCREMENT_BY_PIXELS,20);
             plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 1);
@@ -98,7 +113,7 @@ public class GraphMax extends AppCompatActivity {
             plot.setDomainValueFormat(new Format() {
                 @Override
                 public StringBuffer format(Object object, StringBuffer buffer, FieldPosition field) {
-                    int day = ((Number) object).intValue() % (maxExer.size());
+                    int day = ((Number) object).intValue();
                     if(day>-1&& day<maxExer.size())buffer.append(maxExer.get(day));
                     return buffer;
                 }
@@ -110,6 +125,7 @@ public class GraphMax extends AppCompatActivity {
             });
 
             plot.getGraphWidget().setDomainLabelOrientation(-45);
+            plot.getGraphWidget().setDomainTickLabelVerticalOffset(30);
             plot.redraw();
 
         } catch (FileNotFoundException e) {
