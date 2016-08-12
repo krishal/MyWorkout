@@ -79,7 +79,7 @@ public class EditData extends AppCompatActivity {
     private String[] splitTrim(String line, String splitAt){
         String[] retrn = line.split(splitAt);
         for(int i = 0; i<retrn.length; i++){
-            retrn[i] = retrn[i].trim();
+            retrn[i] = retrn[i].trim().toUpperCase();
         }
         return retrn;
     }

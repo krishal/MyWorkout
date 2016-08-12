@@ -47,7 +47,7 @@ public class GenerateData extends AppCompatActivity {
         List<String[]> work = new ArrayList<>();
         String csvFile = "check.csv";
         CSVReader br = null;
-        String[] exercises = {"pull up","push up","squat"};
+        String[] exercises = {"PULL UP","PUSH UP","SQUAT"};
 
 
         try {
