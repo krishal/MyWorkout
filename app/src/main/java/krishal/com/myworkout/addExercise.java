@@ -164,16 +164,20 @@ public class addExercise extends AppCompatActivity {
 
         newLine[0] = ""+myCal.getTimeInMillis();
 
-/*        if(work.size()==0){*/
+        //Add to new list
+        if(work.size()==0){
             work.add(newLine);
-/*        } else if(work.get(0)[0].compareTo(newLine[0])>=0){
+        }//Add to the start of the list
+        else if(work.get(0)[0].compareTo(newLine[0])>=0){
             work.add(0,newLine);
-        } else if(work.get(work.size()-1)[0].compareTo(newLine[0])<=0){
+        }//Add to end of list
+        else if(work.get(work.size()-1)[0].compareTo(newLine[0])<=0){
             work.add(newLine);
-        } else{
+        }//Other cases
+        else{
             int insertIndx = insertIndex((ArrayList)work, 0, work.size(), newLine[0]);
             work.add(insertIndx,newLine);
-        }*/
+        }
 
         try {
             FileOutputStream fileOutputStream = openFileOutput(csvFile, MODE_PRIVATE);
@@ -195,12 +199,29 @@ public class addExercise extends AppCompatActivity {
         }
     }
 
-/*    private int insertIndex(ArrayList work, int start, int end, String s) {
+    private int insertIndex(ArrayList<String[]> work, int start, int end, String s) {
         int mid = (end-start)/2+start;
-        if(start>end){
-            return 0;
-        }else if(work.get(mid))
-    }*/
+        int diff;
+        int diffmid;
+        for(int i = mid; i<end && i>0; i++){
+            mid = (end-start)/2+start;
+            diff = s.compareTo(work.get(mid-1)[0]);
+            diffmid = s.compareTo(work.get(mid)[0]);
+            if(diff>0 && diffmid<0){
+                break;
+            }
+            else if(diff == 0 || diffmid == 0){
+                break;
+            }
+            else if(diffmid > 0){
+                start = mid;
+            }
+            else if(diffmid < 0){
+                end = mid;
+            }
+        }
+        return mid;
+    }
 
     public String[] listIntoOneLine(ArrayList<String[]> h){
         String[] ret = new String[h.size()*numberOfEntries+1];
