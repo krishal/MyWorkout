@@ -1,27 +1,24 @@
 package krishal.com.myworkout;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
-import com.androidplot.ui.SeriesRenderer;
+import com.androidplot.ui.AnchorPosition;
+import com.androidplot.ui.Size;
+import com.androidplot.ui.SizeLayoutType;
+import com.androidplot.ui.XLayoutStyle;
+import com.androidplot.ui.YLayoutStyle;
 import com.androidplot.xy.BarFormatter;
 import com.androidplot.xy.BarRenderer;
 import com.androidplot.xy.BoundaryMode;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYPlotZoomPan;
-import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.opencsv.CSVReader;
 
 import java.io.FileInputStream;
@@ -31,11 +28,7 @@ import java.io.InputStreamReader;
 import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,13 +36,15 @@ import java.util.Map;
 
 public class GraphMax extends AppCompatActivity {
 
-    private XYPlot plot;
+    private XYPlotZoomPan plot;
     private int numberOfInputs = 4;
+    private Context cont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_max);
+        cont = this;
         plotFile();
     }
 
@@ -68,7 +63,7 @@ public class GraphMax extends AppCompatActivity {
                 work.add(nextLine);
             }
 
-            plot = (XYPlot) findViewById(R.id.plot);
+            plot = (XYPlotZoomPan) findViewById(R.id.plot);
 
 //            BarFormatter barFormatter = new BarFormatter(Color.argb(200,100,100,150),Color.LTGRAY);
 //            barFormatter.setPointLabelFormatter(new PointLabelFormatter());
@@ -94,7 +89,7 @@ public class GraphMax extends AppCompatActivity {
             renderer.setBarRenderStyle(BarRenderer.BarRenderStyle.SIDE_BY_SIDE);
             renderer.setBarWidthStyle(BarRenderer.BarWidthStyle.FIXED_WIDTH);
 
-            renderer.setBarWidth(60);
+            renderer.setBarWidth(dp2px(cont,20));
 
             Paint series1Fill = new Paint();
             series1Fill.setColor(Color.MAGENTA);
@@ -104,6 +99,7 @@ public class GraphMax extends AppCompatActivity {
             // Reduce the number of range labels
             plot.setTicksPerRangeLabel(5);
             plot.setDomainBoundaries(-1, maxExer.size(), BoundaryMode.FIXED);
+            plot.setDomainUpperBoundary(5,BoundaryMode.FIXED);
             plot.setRangeLowerBoundary(0,BoundaryMode.FIXED);
             plot.setRangeStep(XYStepMode.INCREMENT_BY_PIXELS,20);
             plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 1);
@@ -125,7 +121,28 @@ public class GraphMax extends AppCompatActivity {
             });
 
             plot.getGraphWidget().setDomainLabelOrientation(-45);
-            plot.getGraphWidget().setDomainTickLabelVerticalOffset(30);
+            plot.getGraphWidget().setDomainTickLabelVerticalOffset(dp2px(cont,30));
+            plot.getGraphWidget().position(dp2px(cont,50), XLayoutStyle.ABSOLUTE_FROM_LEFT,dp2px(cont,50), YLayoutStyle.ABSOLUTE_FROM_TOP, AnchorPosition.LEFT_TOP);
+            plot.getGraphWidget().setHeight(dp2px(cont,400),SizeLayoutType.ABSOLUTE);
+            plot.getGraphWidget().setWidth(dp2px(cont,250),SizeLayoutType.ABSOLUTE);
+            plot.getRangeLabelWidget().position(dp2px(cont,15), XLayoutStyle.ABSOLUTE_FROM_LEFT,0, YLayoutStyle.ABSOLUTE_FROM_CENTER, AnchorPosition.RIGHT_MIDDLE);
+            plot.getDomainLabelWidget().position(0, XLayoutStyle.ABSOLUTE_FROM_CENTER,dp2px(cont,10), YLayoutStyle.ABSOLUTE_FROM_BOTTOM, AnchorPosition.BOTTOM_MIDDLE);
+//            plot.getDomainLabelWidget().setLabelPaint(new Paint());
+            plot.getRangeLabelWidget().setVisible(true);
+//            plot.getRangeLabelWidget().setLabelPaint(new Paint());
+            plot.getDomainLabelWidget().getLabelPaint().setTextSize(dp2px(cont,15));
+            plot.getRangeLabelWidget().getLabelPaint().setTextSize(dp2px(cont, 15));
+            plot.getGraphWidget().getDomainOriginLinePaint().setTextSize(dp2px(cont,10));
+            plot.getGraphWidget().getRangeOriginLinePaint().setTextSize(dp2px(cont,10));
+            plot.getGraphWidget().setShowDomainLabels(true);
+//            plot.getGraphWidget().getDomainTickLabelPaint().setColor(Color.BLACK);
+//            plot.getGraphWidget().getRangeTickLabelPaint().setColor(Color.BLACK);
+            plot.getGraphWidget().setPaddingBottom(dp2px(cont,60));
+            plot.getGraphWidget().setShowRangeLabels(true);
+            plot.getGraphWidget().setPaddingLeft(dp2px(cont,40));
+            Paint paint = new Paint();
+            paint.setAlpha(0);
+//            plot.getGraphWidget().setBackgroundPaint(paint);
             plot.redraw();
 
         } catch (FileNotFoundException e) {
@@ -141,6 +158,11 @@ public class GraphMax extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public static float dp2px(Context context, float dipValue) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 
     public HashMap<String,Number> extractMaxes(LinkedList<String[]> holder){

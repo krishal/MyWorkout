@@ -8,10 +8,11 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
+    android:background="@color/ap_gray"
     tools:context="krishal.com.myworkout.GraphMax">
 
-    <com.androidplot.xy.XYPlot
-        style="@style/APDefacto.Light"
+    <com.androidplot.xy.XYPlotZoomPan
+        style="@style/APDefacto"
         android:id="@+id/plot"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
